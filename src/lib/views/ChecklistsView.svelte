@@ -36,14 +36,14 @@
     <button class="grid items-center pr-2" on:click={() => (selectable = false)}
       ><span class="material-symbols-outlined"> close </span></button
     >
-    <h1 class="">Title</h1>
+    <h1 class="">CheckIt!</h1>
     <div class="w-full flex justify-end gap-2">
       <button class="grid items-center" on:click={() => deleteAllSelected()}
         ><span class="material-symbols-outlined"> delete </span></button
       >
     </div>
   {:else}
-    <h1 class="">Title</h1>
+    <h1 class="">CheckIt!</h1>
     <div class="w-full flex justify-end gap-2">
       <button class="grid items-center" on:click={() => addmodal.show()}
         ><span class="material-symbols-outlined"> add </span></button

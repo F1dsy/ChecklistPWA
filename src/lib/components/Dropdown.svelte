@@ -24,14 +24,14 @@
 <dialog bind:this={dialog} on:click|self={() => close()}>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
-    class="fixed flex flex-col w-16 h-16 rounded-lg right-4 top-4 bg-white drop-shadow-sm transition-transform origin-top-right"
+    class="fixed flex flex-col rounded-lg right-4 top-4 bg-white drop-shadow-sm transition-transform origin-top-right"
     on:click|stopPropagation
     class:scale-0={!isOpen}
     class:scale-100={isOpen}
   >
     {#each items as item}
       <button
-        class="border-b border-b-neutral-300"
+        class="border-b border-b-neutral-300 p-2 last:border-b-0"
         on:click={() => {
           close();
           item.onclick();
