@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
   const elements = new Set<ChecklistItem>();
 
-  export function resetAll() {
+  export function resetAll(store: ChecklistStore) {
     elements.forEach((element) => {
-      console.log(get(element.isChecked));
       element.isChecked.set(false);
     });
+    // store.checkToggle();
   }
 </script>
 
@@ -23,8 +23,8 @@
   export let checklistStore: ChecklistStore;
   export let item: ChecklistItem;
   let isChecked = item.isChecked;
-  isChecked.subscribe((val) => checklistStore.checkToggle(item));
-  let modal: GenericModal;
+
+  isChecked.subscribe((val) => checklistStore.checkToggle());
 </script>
 
 <label
@@ -39,10 +39,6 @@
     class=""
     bind:checked={$isChecked}
   />
-  <button on:click={() => modal.show()}>{item.name}</button>
+  <button on:click={() => {}}>{item.name}</button>
   <span class="material-symbols-outlined handle ml-auto">drag_handle</span>
 </label>
-
-<GenericModal bind:this={modal}>
-  <h1>{item.name}</h1>
-</GenericModal>

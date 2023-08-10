@@ -35,7 +35,7 @@
   let dropdownItems = [
     {
       label: "Reset",
-      onclick: () => resetAll(),
+      onclick: () => resetAll(checklistStore),
     },
     {
       label: "Delete List",
@@ -73,7 +73,7 @@
   </AppBar>
   <div class="">
     <SortableList {onUpdate}>
-      {#each $checklist.items as item (item.name)}
+      {#each $checklist.items as item (item)}
         <ListItem {item} {checklistStore} />
       {/each}
     </SortableList>
@@ -82,9 +82,10 @@
       <form class="flex" on:submit|preventDefault>
         <input
           class="p-1 rounded-md bg-gray-100 dark:bg-gray-800"
+          required
           type="text"
-          name=""
-          id=""
+          name="nameInput"
+          id="nameInput"
           bind:value={nameInput}
         />
         <button

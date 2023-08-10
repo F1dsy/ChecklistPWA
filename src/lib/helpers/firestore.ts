@@ -13,6 +13,7 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { getAuth, type Auth } from "firebase/auth";
 import { Checklist } from "../models/checklist";
@@ -59,9 +60,13 @@ export class Database {
     addDoc(this.userChecklistsCollection, checklist);
   }
 
-  updateChecklist(checklist: Checklist) {
+  setChecklist(checklist: Checklist) {
     let docRef = doc(this.userChecklistsCollection, checklist.id);
     setDoc(docRef, checklist);
+  }
+  updateChecklist(id, fields) {
+    let docRef = doc(this.userChecklistsCollection, id);
+    updateDoc(docRef, fields);
   }
 
   deleteChecklist(id: string) {

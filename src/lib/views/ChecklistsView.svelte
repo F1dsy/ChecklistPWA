@@ -51,7 +51,7 @@
       <button class="grid items-center" on:click={() => push("/account")}
         ><span class="material-symbols-outlined"> person </span></button
       >
-      <Dropdown {items} />
+      <!-- <Dropdown {items} /> -->
     </div>
   {/if}
 </AppBar>

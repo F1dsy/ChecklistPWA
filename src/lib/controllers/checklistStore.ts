@@ -2,6 +2,7 @@ import { get, readable, type Readable } from "svelte/store";
 import type { Database } from "../helpers/firestore";
 import { Checklist } from "../models/checklist";
 import { ChecklistItem } from "../models/checklistitem";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
 
 // export function createChecklistStore(db: Database, id: string) {
 //   let checklist = readable<Checklist>(null, (set) => {
@@ -49,30 +50,35 @@ export class ChecklistStore {
 
   checklist: Readable<Checklist>;
 
+  private get id() {
+    return get(this.checklist).id;
+  }
+
   addItem(name: string) {
-    let clist = get(this.checklist);
-    console.log(clist);
-    clist.items.push(new ChecklistItem(name, false));
-    this.db.updateChecklist(clist);
+    this.db.updateChecklist(this.id, {
+      items: arrayUnion(new ChecklistItem(name, false).toMap()),
+    });
+  }
+
+  removeItem(item: ChecklistItem) {
+    this.db.updateChecklist(this.id, { items: arrayRemove(item.toMap()) });
   }
 
   changeSort(newList: ChecklistItem[]) {
-    let clist = get(this.checklist);
-    clist.items = newList;
-    this.db.updateChecklist(clist);
+    this.db.updateChecklist(this.id, {
+      items: newList.map((val) => val.toMap()),
+    });
   }
 
   deleteChecklist() {
-    this.db.deleteChecklist(get(this.checklist).id);
+    this.db.deleteChecklist(this.id);
   }
 
   renameChecklist(newName: string) {
-    let clist = get(this.checklist);
-    clist.name = newName;
-    this.db.updateChecklist(clist);
+    this.db.updateChecklist(this.id, { name: newName });
   }
 
-  checkToggle(checkListItem: ChecklistItem) {
-    this.db.updateChecklist(get(this.checklist));
+  checkToggle() {
+    this.db.setChecklist(get(this.checklist));
   }
 }
